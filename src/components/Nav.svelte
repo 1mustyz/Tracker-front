@@ -1,9 +1,8 @@
 <script>
     import FaHome from 'svelte-icons/fa/FaHome.svelte'
 	export let activeHome = false
-    export let activeAddStudent = false
+    export let activeAddVehicle = false
     export let activeProfile = false
-    export let activeViewStudent = false
     let active = false
 
     console.log(active)
@@ -11,11 +10,11 @@
 
 <main>
     <div class="logo">
-        SMART ID
+        TRACKER
     </div>
 
     <div class="nav">
-        <a class="link" class:active={activeHome == true} href="http://localhost:5000">
+        <a class="link" class:active={activeHome == true} href="http://localhost:5000/dashboard">
             <div class="icon" class:active-color={activeHome == true}>
                 <FaHome/>
             </div>
@@ -34,26 +33,17 @@
             </p>
 
         </a>
-        <a class="link" class:active={activeAddStudent} href="http://localhost:5000/add-student">
-            <div class="icon" class:active-color={activeAddStudent}>
+        <a class="link" class:active={activeAddVehicle} href="http://localhost:5000/add-vehicle">
+            <div class="icon" class:active-color={activeAddVehicle}>
                 <FaHome/>
             </div>
-            <p class="text" class:active-color={activeAddStudent}>
-                Add Student
+            <p class="text" class:active-color={activeAddVehicle}>
+                Add Vehicle
             </p>
 
         </a>
 
-        <a class="link" class:active={activeViewStudent} href="http://localhost:5000/view-student">
-            <div class="icon" class:active-color={activeViewStudent}>
-                <FaHome/>
-            </div>
-            <p class="text" class:active-color={activeViewStudent}>
-                View Student
-            </p>
-
-        </a>
-
+        
         <a class="link" class:active={active} href="http://localhost:5000/login">
             <div class="icon" class:active-color={active}>
                 <FaHome/>

@@ -2,7 +2,7 @@
 	import Header from "./Header.svelte";
 	import Vertical from "../shared/Vertical.svelte"
 	import Nav from "./Nav.svelte"
-	import MainContent from "./MainContent.svelte";
+	import Table from "../shared/Table.svelte"
 
 	export let active
 
@@ -16,7 +16,7 @@
 	
     <div class="align">
         <Header/>
-        <MainContent/>
+        <Table/>
     </div>
 </div>
 
@@ -30,6 +30,6 @@
 	}
 
     .align {
-		max-width: 100vw;
+		min-width: 78vw;
 	}
 </style>

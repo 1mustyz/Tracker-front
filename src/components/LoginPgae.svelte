@@ -3,19 +3,19 @@
     import { TextField } from "smelte";
     import {Button,Icon} from "smelte";
 
-    let fields = {idNumber: "", password: ""}
-    let errors = {idNumber: "", password: ""}
+    let fields = {email: "", password: ""}
+    let errors = {email: "", password: ""}
     let valid = false
 
     const submitHandler = () => {
         valid = true
 
       
-        if(fields.idNumber.trim().length < 1){
+        if(fields.email.trim().length < 1){
             valid = false
-            errors.idNumber = 'id number A must not be empty'
+            errors.email = 'id number A must not be empty'
         }else{
-            errors.idNumber = ''
+            errors.email = ''
         }
 
         if(fields.password.trim().length < 1){
@@ -48,12 +48,12 @@
     </div>
 
     <form action="" class="login" >
-        <TextField label="ID NO." outlined hint="ID NO." bind:value={fields.idNumber} />
+        <TextField label="Email" outlined hint="@xyz.com" bind:value={fields.email} />
         <TextField label="Password" outlined hint="Password" bind:value={fields.password} />
     </form>
 
     <div class="signin">
-        <p class="text1">Sign In</p>
+        <a class="text1" href="http://localhost:5000">Sign In</a>
         <p class="text1">Forget Password</p>
     </div>
 

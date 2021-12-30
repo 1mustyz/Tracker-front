@@ -2,7 +2,6 @@
 	import Header from "./Header.svelte";
 	import Vertical from "../shared/Vertical.svelte"
 	import Nav from "./Nav.svelte"
-	import MainContent from "./MainContent.svelte";
     import { TextField } from "smelte";
     import {Button,Icon} from "smelte";
     import Avatar from "../shared/Avatar.svelte";

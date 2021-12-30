@@ -2,21 +2,19 @@
 	import "smelte/src/tailwind.css" ;
 	import router from "page"
 	import Home from "./components/Home.svelte"
-	import ViewStudent from "./components/ViewStudent.svelte";
 	import LoginPage from "./components/LoginPgae.svelte";
-	import AddStudent from "./components/AddStudent.svelte";
+	import AddVehicle from "./components/AddVehicle.svelte";
 	import StaffProfile from "./components/StaffProfile.svelte";
-	import StudentProfile from "./components/StudentProfile.svelte";
+	import Registration from "./components/Registration.svelte";
 	
 	
 	let page
 
-	router('/', () => page = Home)
-	router('/view-student', () => page = ViewStudent)
+	router('/', () => page = Registration)
+	router('/dashboard', () => page = Home)
 	router('/login', () => page = LoginPage)
-	router('/add-student', () => page = AddStudent)
+	router('/add-vehicle', () => page = AddVehicle)
 	router('/staff-profile', () => page = StaffProfile)
-	router('/student-profile', () => page = StudentProfile)
 
 	let active = true
 
