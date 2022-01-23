@@ -14,7 +14,7 @@
     </div>
 
     <div class="nav">
-        <a class="link" class:active={activeHome == true} href="http://localhost:5000/dashboard">
+        <a class="link" class:active={activeHome == true} href="/dashboard">
             <div class="icon" class:active-color={activeHome == true}>
                 <FaHome/>
             </div>
@@ -24,7 +24,7 @@
 
         </a>
 
-        <a class="link" class:active={activeProfile} href="http://localhost:5000/staff-profile">
+        <a class="link" class:active={activeProfile} href="/staff-profile">
             <div class="icon" class:active-color={activeProfile}>
                 <FaHome/>
             </div>
@@ -33,7 +33,7 @@
             </p>
 
         </a>
-        <a class="link" class:active={activeAddVehicle} href="http://localhost:5000/add-vehicle">
+        <a class="link" class:active={activeAddVehicle} href="/add-vehicle">
             <div class="icon" class:active-color={activeAddVehicle}>
                 <FaHome/>
             </div>
@@ -44,7 +44,7 @@
         </a>
 
         
-        <a class="link" class:active={active} href="http://localhost:5000/login">
+        <a class="link" class:active={active} href="/login">
             <div class="icon" class:active-color={active}>
                 <FaHome/>
             </div>

@@ -4,58 +4,92 @@
 	import Nav from "./Nav.svelte"
     import { TextField } from "smelte";
     import {Button,Icon} from "smelte";
+    import FacebookLoader from "../shared/loader/FacebookLoader.svelte"
+    import { user } from '../stores';
+    import { alert, notice, info, success, error, defaultModules } from '@pnotify/core';
+    import * as PNotifyMobile from '@pnotify/mobile';
+
+
+    defaultModules.set(PNotifyMobile, {});
+
+    function myErrorAlert(errorMsg){
+            error({
+            text: errorMsg
+        });
+    }
 
     export let active
 
 	let activeAddVehicle = active
 
-    let fields = {vehicleName:"", brandName:"", yearOfPurchase:"", color:"", trackerId:"", department:"", faculty:"", state:"", level:""}
-    let errors = {vehicleName:"", brandName:"", yearOfPurchase:"", color:"", trackerId:"", department:"", faculty:"", state:"", level:""}
+    let fields = {vehicleName:"", brandName:"", yearOfPurchase:"", color:""}
     let valid = false
+    let load = false
 
-    const submitHandler = () => {
+    const submitHandler = async () => {
+    console.log($user)
+
         valid = true
-console.log('hello')
+        load = true
+        console.log('hello')
        
         if(fields.vehicleName.trim().length < 1){
             valid = false
-            errors.vehicleName = 'First Name must not be empty'
-        }else{
-            errors.vehicleName = ''
+            myErrorAlert('Vehicle Name must not be empty')
+            load = false
+            return
         }
 
         if(fields.brandName.trim().length < 1){
             valid = false
-            errors.brandName = 'Brand Name must not be empty'
-        }else{
-            errors.brandName = ''
+            myErrorAlert('Brand Name must not be empty')
+            load = false
+            return
         }
 
         if(fields.yearOfPurchase.trim().length < 1){
             valid = false
-            errors.yearOfPurchase = 'Year of purchase must not be empty'
-        }else{
-            errors.yearOfPurchase = ''
+            myErrorAlert('Year of purchase must not be empty')
+            load = false
+            return
         }
 
         if(fields.color.trim().length < 1){
             valid = false
-            errors.color = 'Color must not be empty'
-        }else{
-            errors.color = ''
+            myErrorAlert('Color must not be empty')
+            load = false
+            return
         }
-
-       
-        if(fields.trackerId.trim().length < 1){
-            valid = false
-            errors.trackerId = 'Gender must not be empty'
-        }else{
-            errors.trackerId = ''
-        }
-
         
         if(valid){
             console.log(fields)
+            try {
+
+                const data = {username: $user.username, vehicle: fields}
+                const rawResponse = await fetch('https://tracker-back.herokuapp.com/admin/add-vehicle', {
+                method: 'PUT',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+                });
+                const content = await rawResponse.json(data);
+
+                console.log(content)
+                if(content.success == true){
+                    console.log('vehicle added')
+                    myErrorAlert('Vehicle Added!!')
+                    load = false
+                    
+                }
+                
+                    
+            } catch (error) {
+                console.log(error)
+                myErrorAlert(error)
+                load = false
+            }
         }
     }
 </script>
@@ -88,15 +122,18 @@ console.log('hello')
                 <TextField label="Color" outlined hint="grey" bind:value={fields.color}/>
             </div>
 
-            <div>
-
-                <TextField label="Tracker ID" outlined hint="tracker" bind:value={fields.trackerId}/>
-            </div>
-
            
             <div class="btn">
 
-                <Button color="primary" dark block on:click={submitHandler}>ADD VEHICLE</Button>
+                <Button color="primary" dark block disabled={load} on:click={submitHandler}>
+                    {#if load}
+                        <div class="loader">
+                            <FacebookLoader />
+                        </div>
+                        {:else}
+                        ADD VEHICLE
+                    {/if}
+                </Button>
             </div>
         </form>
     </div>
@@ -134,5 +171,10 @@ console.log('hello')
 
     .btn {
         margin-top: 1.9rem;
+    }
+
+    .loader {
+        width: 100%;
+        padding-right: 4rem;
     }
 </style>

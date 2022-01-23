@@ -2,81 +2,120 @@
     import FaRegUser from 'svelte-icons/fa/FaRegUser.svelte'
     import { TextField } from "smelte";
     import {Button,Icon} from "smelte";
+    import FacebookLoader from "../shared/loader/FacebookLoader.svelte"
+    import { alert, notice, info, success, error, defaultModules } from '@pnotify/core';
+    import * as PNotifyMobile from '@pnotify/mobile';
 
-    let fields = {firstName: "", lastName: "", address:"", phone:"", email:"", password:"", confirmPassword:""}
-    let errors =  {firstName: "", lastName: "", address:"", phone:"", email:"", password:"", confirmPassword:""}
+    defaultModules.set(PNotifyMobile, {});
+
+    function myErrorAlert(errorMsg){
+            error({
+            text: errorMsg
+        });
+    }
+
+
+
+    let fields = {firstName: "", lastName: "", address:"", phone:"", username:"", password:"", confirmPassword:""}
     let valid = false
+    let load = false
 
-    const submitHandler = () => {
+    const submitHandler = async () => {
         valid = true
-
+        load = true
       
         if(fields.firstName.trim().length < 1){
             valid = false
-            errors.firstName = 'First Name A must not be empty'
-        }else{
-            errors.firstName = ''
+            myErrorAlert('First Name must not be empty')
+            return 
         }
-
         if(fields.lastName.trim().length < 1){
             valid = false
-            errors.lastName = 'Last Name must not be empty'
-        }else{
-            errors.lastName = ''
+            myErrorAlert('Last Name must not be empty')
+            return 
+
+
         }
 
         if(fields.address.trim().length < 1){
             valid = false
-            errors.address = 'Address must not be empty'
-        }else{
-            errors.address = ''
+            myErrorAlert('Address must not be empty')
+            return 
+
+
         }
 
         if(fields.phone.trim().length < 1){
             valid = false
-            errors.phone = 'Phone Number must not be empty'
-        }else{
-            errors.phone = ''
+            myErrorAlert('Phone Number must not be empty')
+            return 
+
+            
         }
 
-        if(fields.email.trim().length < 1){
+        if(fields.username.trim().length < 1){
             valid = false
-            errors.email = 'Email must not be empty'
-        }else{
-            errors.email = ''
+            myErrorAlert('Email must not be empty')
+            return 
+
         }
 
         
         if(fields.password.trim().length < 1){
             valid = false
-            errors.password = 'password must not be empty'
-        }else{
-            errors.password = ''
+            myErrorAlert('password must not be empty')
+            return 
+            
         }
 
         if(fields.confirmPassword.trim().length < 1){
             valid = false
-            errors.confirmPassword = 'Confirm Password must not be empty'
-        }else{
-            errors.confirmPassword = ''
-        }
+            myErrorAlert('Confirm Password must not be empty')
+            return 
 
+        }
         if(fields.password != fields.confirmPassword){
             valid = false
-            errors.confirmPassword = 'password and confirm password does not match'
-        }else{
-            errors.confirmPassword = ''
+            myErrorAlert('password and confirm password does not match')
+            return 
+
         }
 
+        
         if(valid){
-            // let poll = {...fields, votesA: 0, votesB: 0, id: Math.random()}
+            console.log(valid)
+            console.log(fields)
+            try {
 
-            // PollStore.update(currentPolls => {
-            //     return [poll, ...currentPolls]
-            // })
-            // dispatch('add', poll)
+                const data = fields
+                const rawResponse = await fetch('https://tracker-back.herokuapp.com/admin/register', {
+                method: 'POST',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+                });
+                const content = await rawResponse.json(data);
 
-            console.log(fields,errors)
+                console.log(content)
+                if(content.success == true){
+
+                    myErrorAlert('Registration sucessfull!!')
+                    load = false
+
+                }
+                else {
+                    myErrorAlert('A user with the given username is already registered')
+                    load = false
+                }
+                    
+            } catch (error) {
+                myErrorAlert(error)
+                load = false
+            }
+           
+
         }
     }
 
@@ -91,20 +130,28 @@
     </div>
 
     <form action="" class="login" >
-        <TextField label="First Name" outlined hint="John " bind:value={fields.idNumber} />
-        <TextField label="Last Name" outlined hint="Doe " bind:value={fields.idNumber} />
-        <TextField label="Address" outlined hint="Jimeta " bind:value={fields.idNumber} />
-        <TextField label="phone" outlined hint="+234" bind:value={fields.idNumber} />
-        <TextField label="mail" outlined hint="@xyz.com " bind:value={fields.idNumber} />
-        <TextField label="Password" outlined hint="Password" bind:value={fields.password} />
-        <TextField label="Confirm Password" outlined hint="John " bind:value={fields.idNumber} />
+        <TextField label="First Name" outlined hint="John " bind:value={fields.firstName} />
+        <TextField label="Last Name" outlined hint="Doe " bind:value={fields.lastName} />
+        <TextField label="Address" outlined hint="Jimeta " bind:value={fields.address} />
+        <TextField label="phone" outlined hint="+234" bind:value={fields.phone} />
+        <TextField label="mail" outlined hint="@xyz.com " bind:value={fields.username} />
+        <TextField label="Password" outlined hint="Password" type="password" bind:value={fields.password} />
+        <TextField label="Confirm Password" outlined hint="password" type="password" bind:value={fields.confirmPassword} />
 
     </form>
 
     <div class="signin">
-        <a class="text1" href="http://localhost:5000/login">Log In</a>
+        <a class="text1" href="/login">Log In</a>
         <div class="btn" >
-            <Button color="primary" dark block on:click={submitHandler}>Sign In</Button>
+            <Button color="primary" dark block disabled={load} on:click={submitHandler}>
+                {#if load}
+                <div class="loader">
+                    <FacebookLoader />
+                </div>
+                {:else}
+                SIGN IN
+                {/if}
+            </Button>
         </div>
     </div>
 
@@ -169,5 +216,13 @@
     .text1 {
         color: #8d448b;
         font-weight: 600;
+    }
+
+    .btn {
+        width: 50%;
+    }
+    .loader {
+        width: 100%;
+        padding-right: 4rem;
     }
 </style>

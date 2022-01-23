@@ -2,38 +2,71 @@
     import FaRegUser from 'svelte-icons/fa/FaRegUser.svelte'
     import { TextField } from "smelte";
     import {Button,Icon} from "smelte";
+    import FacebookLoader from "../shared/loader/FacebookLoader.svelte"
+    import { user } from '../stores';
+	import router from "page"
+    import { alert, notice, info, success, error, defaultModules } from '@pnotify/core';
+    import * as PNotifyMobile from '@pnotify/mobile';
 
-    let fields = {email: "", password: ""}
-    let errors = {email: "", password: ""}
+    defaultModules.set(PNotifyMobile, {});
+
+    function myErrorAlert(errorMsg){
+            error({
+            text: errorMsg
+        });
+    }
+
+
+    let fields = {username: "", password: ""}
     let valid = false
+    let load = false
 
-    const submitHandler = () => {
+    const submitHandler = async () => {
         valid = true
-
+        load = true
       
-        if(fields.email.trim().length < 1){
+        if(fields.username.trim().length < 1){
             valid = false
-            errors.email = 'id number A must not be empty'
-        }else{
-            errors.email = ''
+            myErrorAlert('You need an email')
+            return
         }
-
         if(fields.password.trim().length < 1){
             valid = false
-            errors.password = 'password must not be empty'
-        }else{
-            errors.password = ''
+            myErrorAlert('Insert a password')
+            return
         }
 
         if(valid){
-            // let poll = {...fields, votesA: 0, votesB: 0, id: Math.random()}
+            try {
 
-            // PollStore.update(currentPolls => {
-            //     return [poll, ...currentPolls]
-            // })
-            // dispatch('add', poll)
+                const data = {username:fields.username, password:fields.password}
+                const rawResponse = await fetch('https://tracker-back.herokuapp.com/admin/login', {
+                method: 'POST',
+                headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+                });
+                const content = await rawResponse.json(data);
 
-            console.log(fields,errors)
+                // console.log(content)
+                if(content.success == true){
+
+                    user.set(content.newUser)
+                    router.redirect('/dashboard')
+                }
+                else {
+                console.log('incorrect username or password')
+                    myErrorAlert('incorrect username or password')
+                    load = false
+                }
+                    
+            } catch (error) {
+                console.log(error)
+                myErrorAlert(error)
+                load = false
+            }
         }
     }
 
@@ -48,17 +81,25 @@
     </div>
 
     <form action="" class="login" >
-        <TextField label="Email" outlined hint="@xyz.com" bind:value={fields.email} />
-        <TextField label="Password" outlined hint="Password" bind:value={fields.password} />
+        <TextField label="Email" outlined hint="@xyz.com" bind:value={fields.username} />
+        <TextField label="Password" outlined hint="Password" type=password bind:value={fields.password} />
     </form>
 
     <div class="signin">
-        <a class="text1" href="http://localhost:5000">Sign In</a>
+        <a class="text1" href="/">Sign In</a>
         <p class="text1">Forget Password</p>
     </div>
 
     <div class="btn" >
-        <Button color="primary" dark block on:click={submitHandler}>Log In</Button>
+        <Button color="primary" dark block disabled={load} on:click={submitHandler}>
+            {#if load}
+            <div class="loader">
+                <FacebookLoader />
+            </div>
+            {:else}
+            Log In
+            {/if}
+        </Button>
     </div>
 </div>
 
@@ -126,5 +167,10 @@
     .text1 {
         color: #8d448b;
         font-weight: 600;
+    }
+
+    .loader {
+        width: 100%;
+        padding-right: 4rem;
     }
 </style>

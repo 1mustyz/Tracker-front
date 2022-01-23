@@ -5,12 +5,14 @@
     import { TextField } from "smelte";
     import {Button,Icon} from "smelte";
     import Avatar from "../shared/Avatar.svelte";
+    import { user } from '../stores';
+
 
     export let active
 
     let activeProfile = active
 
-    let fields = {firstName:"", surname:"", otherName:"", idNumber:"", gender:"", department:"", faculty:"", state:"", level:""}
+    let fields = {firstName:$user.firstName, surname:$user.lastName, email:$user.username, phone:$user.phone, address:$user.address}
 </script>
 
 <div class="main">
@@ -42,29 +44,22 @@
                 <TextField label="Surname" outlined hint="Surname" disabled bind:value={fields.surname}/>
             </div>
 
+            
+
             <div>
 
-                <TextField label="Other Name" outlined hint="Other Name" disabled bind:value={fields.otherName}/>
+                <TextField label="Email" outlined hint="ID" disabled bind:value={fields.email}/>
+            </div>
+
+            
+            <div>
+
+                <TextField label="Phone" outlined hint="Phone" disabled bind:value={fields.phone}/>
             </div>
 
             <div>
 
-                <TextField label="ID Number" outlined hint="ID" disabled bind:value={fields.idNumber}/>
-            </div>
-
-            <div>
-
-                <TextField label="Gender" outlined hint="Male" disabled bind:value={fields.gender}/>
-            </div>
-
-            <div>
-
-                <TextField label="State" outlined hint="State" disabled bind:value={fields.state}/>
-            </div>
-
-            <div>
-
-                <TextField label="Department" outlined hint="Department" disabled bind:value={fields.department}/>
+                <TextField label="Address" outlined hint="Address" disabled bind:value={fields.address}/>
             </div>
 
            
