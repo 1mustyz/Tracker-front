@@ -4,8 +4,8 @@
 
    let container;
    let map;
-   let zoom = 13;
-   let center = {lat: 12.3984, lng: 9.3265};
+   let zoom = 15;
+   let center = {lat: 9.1992, lng: 12.4988};
    
    import { onMount } from 'svelte';
    
@@ -16,12 +16,13 @@
         //    styles: mapStyles // optional
        });
 
-       marker = new google.maps.Marker({
-           position:{lat: 12.4495, lng: 9.2485},
+       let marker = new google.maps.Marker({
+           position:center,
            map:map
        })
    });
 </script>
+
 
 <style>
 .full-screen {

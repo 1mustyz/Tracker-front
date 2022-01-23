@@ -6,8 +6,8 @@
 	import AddVehicle from "./components/AddVehicle.svelte";
 	import StaffProfile from "./components/StaffProfile.svelte";
 	import Registration from "./components/Registration.svelte";
-	import MapPage from "./components/MapPage.svelte";
 	import Map from './Map.svelte';
+	import VehicleDetails from "./components/VehicleDetails.svelte";
 	export let ready;
 	
 
@@ -22,20 +22,17 @@
 	router('/add-vehicle', () => page = AddVehicle)
 	router('/staff-profile', () => page = StaffProfile)
 	router('/map', () => page = MapPage)
+	router('/vehicle-detail', () => page = VehicleDetails)
 
 
 	let active = true
 
 router.start()
 </script>
-<svelte:head>
-	<script defer async
-	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8W_n9m3E2j2CvAp6iOO0R_tVFFTdnS40&callback=initMap">
-	</script>
-</svelte:head>
+
 
 <main>
-	<svelte:component this={page} />
+	<svelte:component this={page} {ready}/>
 	<!-- { #if ready }
 	<Map></Map>
 	{ /if } -->

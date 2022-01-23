@@ -79,6 +79,7 @@
                 console.log(content)
                 if(content.success == true){
                     console.log('vehicle added')
+                    user.set(content.user)
                     myErrorAlert('Vehicle Added!!')
                     load = false
                     

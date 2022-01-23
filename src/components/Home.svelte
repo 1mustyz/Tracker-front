@@ -3,7 +3,11 @@
 	import Vertical from "../shared/Vertical.svelte"
 	import Nav from "./Nav.svelte"
 	import Table from "../shared/Table.svelte"
+	import SpinnerLoader from "../shared/loader/SpinnerLoader.svelte";
+	import { user } from "../stores";
+	console.log($user)
 
+	const logUser = $user
 	export let active
 
 	let activeHome = active
@@ -16,7 +20,13 @@
 	
     <div class="align">
         <Header/>
-        <Table/>
+		{#await logUser}
+		<p class="waiting"><SpinnerLoader /></p>
+		{:then}
+			<Table {logUser} />
+		{:catch error}
+			<p style="color: red">{error.message}</p>
+		{/await}
     </div>
 </div>
 
@@ -31,5 +41,14 @@
 
     .align {
 		min-width: 78vw;
+	}
+
+	.waiting {
+		width: 30%;
+		margin: auto;
+		margin-left: 28rem;
+		border-radius: 10px;
+		margin-top: 10rem;
+		
 	}
 </style>
