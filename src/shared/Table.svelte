@@ -1,7 +1,16 @@
 <script>
-  export let logUser
-  console.log(logUser.vehicle)
-  const vehicles = logUser.vehicle
+    import { vehicleStore } from '../stores';
+    import router from "page"
+
+    export let logUser
+    console.log(logUser.vehicle)
+    const vehicles = logUser.vehicle
+
+    const vehicleHandler = async (vehicle) => {
+      console.log(vehicle)
+      vehicleStore.set(vehicle)
+      router.redirect('/vehicle-detail')
+  }
 </script>
 
 <main>
@@ -18,7 +27,7 @@
         </thead>
         <tbody>
           {#each vehicles as vehicle, ind}
-            <tr class="tr">
+            <tr class="tr" on:click={()=>vehicleHandler(vehicle)}>
               <td class="td">{ind + 1}</td>
               <td class="td">{vehicle.vehicleName}</td>
               <td class="td">{vehicle.brandName}</td>
