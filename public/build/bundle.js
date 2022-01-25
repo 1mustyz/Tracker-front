@@ -4256,7 +4256,7 @@ var app = (function () {
     const file$g = "src/components/Home.svelte";
 
     // (27:2) {:catch error}
-    function create_catch_block(ctx) {
+    function create_catch_block$1(ctx) {
     	let p;
     	let t_value = /*error*/ ctx[4].message + "";
     	let t;
@@ -4282,7 +4282,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_catch_block.name,
+    		id: create_catch_block$1.name,
     		type: "catch",
     		source: "(27:2) {:catch error}",
     		ctx
@@ -4292,7 +4292,7 @@ var app = (function () {
     }
 
     // (25:2) {:then}
-    function create_then_block(ctx) {
+    function create_then_block$1(ctx) {
     	let table;
     	let current;
 
@@ -4326,7 +4326,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_then_block.name,
+    		id: create_then_block$1.name,
     		type: "then",
     		source: "(25:2) {:then}",
     		ctx
@@ -4336,7 +4336,7 @@ var app = (function () {
     }
 
     // (23:18)    <p class="waiting"><SpinnerLoader /></p>   {:then}
-    function create_pending_block(ctx) {
+    function create_pending_block$1(ctx) {
     	let p;
     	let spinnerloader;
     	let current;
@@ -4372,7 +4372,7 @@ var app = (function () {
 
     	dispatch_dev("SvelteRegisterBlock", {
     		block,
-    		id: create_pending_block.name,
+    		id: create_pending_block$1.name,
     		type: "pending",
     		source: "(23:18)    <p class=\\\"waiting\\\"><SpinnerLoader /></p>   {:then}",
     		ctx
@@ -4405,9 +4405,9 @@ var app = (function () {
     		current: null,
     		token: null,
     		hasCatch: true,
-    		pending: create_pending_block,
-    		then: create_then_block,
-    		catch: create_catch_block,
+    		pending: create_pending_block$1,
+    		then: create_then_block$1,
+    		catch: create_catch_block$1,
     		error: 4,
     		blocks: [,,,]
     	};
@@ -13639,7 +13639,7 @@ var app = (function () {
     			div = element("div");
     			create_component(facebookloader.$$.fragment);
     			attr_dev(div, "class", "loader svelte-14jqysd");
-    			add_location(div, file$6, 95, 12, 2864);
+    			add_location(div, file$6, 95, 12, 2878);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -13780,7 +13780,8 @@ var app = (function () {
     	let textfield0_props = {
     		label: "Email",
     		outlined: true,
-    		hint: "@xyz.com"
+    		hint: "a@xyz.com",
+    		type: "email"
     	};
 
     	if (/*fields*/ ctx[0].username !== void 0) {
@@ -13857,13 +13858,13 @@ var app = (function () {
     			add_location(form, file$6, 82, 4, 2351);
     			attr_dev(a, "class", "text1 svelte-14jqysd");
     			attr_dev(a, "href", "/");
-    			add_location(a, file$6, 88, 8, 2626);
+    			add_location(a, file$6, 88, 8, 2640);
     			attr_dev(p, "class", "text1 svelte-14jqysd");
-    			add_location(p, file$6, 89, 8, 2672);
+    			add_location(p, file$6, 89, 8, 2686);
     			attr_dev(div2, "class", "signin svelte-14jqysd");
-    			add_location(div2, file$6, 87, 4, 2597);
+    			add_location(div2, file$6, 87, 4, 2611);
     			attr_dev(div3, "class", "btn svelte-14jqysd");
-    			add_location(div3, file$6, 92, 4, 2725);
+    			add_location(div3, file$6, 92, 4, 2739);
     			attr_dev(div4, "class", "main svelte-14jqysd");
     			add_location(div4, file$6, 74, 0, 2171);
     		},
@@ -16203,29 +16204,34 @@ var app = (function () {
     const { console: console_1 } = globals;
     const file$1 = "src/components/VehicleDetails.svelte";
 
-    // (83:4) { #if ready }
+    // (99:4) { #if ready }
     function create_if_block(ctx) {
     	let div1;
-    	let map;
+    	let promise;
     	let t;
     	let div0;
     	let button;
     	let current;
 
-    	map = new Map$1({
-    			props: {
-    				location: /*location*/ ctx[2],
-    				locationTime: /*locationTime*/ ctx[3]
-    			},
-    			$$inline: true
-    		});
+    	let info_1 = {
+    		ctx,
+    		current: null,
+    		token: null,
+    		hasCatch: false,
+    		pending: create_pending_block,
+    		then: create_then_block,
+    		catch: create_catch_block,
+    		blocks: [,,,]
+    	};
+
+    	handle_promise(promise = /*location*/ ctx[1] && /*locationTime*/ ctx[2], info_1);
 
     	button = new Button({
     			props: {
     				color: "primary",
     				dark: true,
     				block: true,
-    				disabled: /*load*/ ctx[1],
+    				disabled: /*load*/ ctx[3],
     				$$slots: { default: [create_default_slot] },
     				$$scope: { ctx }
     			},
@@ -16237,32 +16243,37 @@ var app = (function () {
     	const block = {
     		c: function create() {
     			div1 = element("div");
-    			create_component(map.$$.fragment);
+    			info_1.block.c();
     			t = space();
     			div0 = element("div");
     			create_component(button.$$.fragment);
     			attr_dev(div0, "class", "btn svelte-wdi5y7");
-    			add_location(div0, file$1, 87, 2, 2087);
+    			add_location(div0, file$1, 107, 2, 2653);
     			attr_dev(div1, "class", "sec svelte-wdi5y7");
-    			add_location(div1, file$1, 83, 1, 2026);
+    			add_location(div1, file$1, 99, 1, 2511);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div1, anchor);
-    			mount_component(map, div1, null);
+    			info_1.block.m(div1, info_1.anchor = null);
+    			info_1.mount = () => div1;
+    			info_1.anchor = t;
     			append_dev(div1, t);
     			append_dev(div1, div0);
     			mount_component(button, div0, null);
     			current = true;
     		},
-    		p: function update(ctx, dirty) {
-    			const map_changes = {};
-    			if (dirty & /*location*/ 4) map_changes.location = /*location*/ ctx[2];
-    			if (dirty & /*locationTime*/ 8) map_changes.locationTime = /*locationTime*/ ctx[3];
-    			map.$set(map_changes);
-    			const button_changes = {};
-    			if (dirty & /*load*/ 2) button_changes.disabled = /*load*/ ctx[1];
+    		p: function update(new_ctx, dirty) {
+    			ctx = new_ctx;
+    			info_1.ctx = ctx;
 
-    			if (dirty & /*$$scope, load*/ 1026) {
+    			if (dirty & /*location, locationTime*/ 6 && promise !== (promise = /*location*/ ctx[1] && /*locationTime*/ ctx[2]) && handle_promise(promise, info_1)) ; else {
+    				update_await_block_branch(info_1, ctx, dirty);
+    			}
+
+    			const button_changes = {};
+    			if (dirty & /*load*/ 8) button_changes.disabled = /*load*/ ctx[3];
+
+    			if (dirty & /*$$scope, load*/ 4104) {
     				button_changes.$$scope = { dirty, ctx };
     			}
 
@@ -16270,18 +16281,24 @@ var app = (function () {
     		},
     		i: function intro(local) {
     			if (current) return;
-    			transition_in(map.$$.fragment, local);
+    			transition_in(info_1.block);
     			transition_in(button.$$.fragment, local);
     			current = true;
     		},
     		o: function outro(local) {
-    			transition_out(map.$$.fragment, local);
+    			for (let i = 0; i < 3; i += 1) {
+    				const block = info_1.blocks[i];
+    				transition_out(block);
+    			}
+
     			transition_out(button.$$.fragment, local);
     			current = false;
     		},
     		d: function destroy(detaching) {
     			if (detaching) detach_dev(div1);
-    			destroy_component(map);
+    			info_1.block.d();
+    			info_1.token = null;
+    			info_1 = null;
     			destroy_component(button);
     		}
     	};
@@ -16290,14 +16307,120 @@ var app = (function () {
     		block,
     		id: create_if_block.name,
     		type: "if",
-    		source: "(83:4) { #if ready }",
+    		source: "(99:4) { #if ready }",
     		ctx
     	});
 
     	return block;
     }
 
-    // (95:4) {:else}
+    // (1:0) <script>  import Header from "./Header.svelte";  import SpinnerLoader from "../shared/loader/SpinnerLoader.svelte";     import Map from "../Map.svelte";     import {Button,Icon}
+    function create_catch_block(ctx) {
+    	const block = {
+    		c: noop,
+    		m: noop,
+    		p: noop,
+    		i: noop,
+    		o: noop,
+    		d: noop
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_catch_block.name,
+    		type: "catch",
+    		source: "(1:0) <script>  import Header from \\\"./Header.svelte\\\";  import SpinnerLoader from \\\"../shared/loader/SpinnerLoader.svelte\\\";     import Map from \\\"../Map.svelte\\\";     import {Button,Icon}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (103:2) {:then}
+    function create_then_block(ctx) {
+    	let map;
+    	let current;
+
+    	map = new Map$1({
+    			props: {
+    				location: /*location*/ ctx[1],
+    				locationTime: /*locationTime*/ ctx[2]
+    			},
+    			$$inline: true
+    		});
+
+    	const block = {
+    		c: function create() {
+    			create_component(map.$$.fragment);
+    		},
+    		m: function mount(target, anchor) {
+    			mount_component(map, target, anchor);
+    			current = true;
+    		},
+    		p: function update(ctx, dirty) {
+    			const map_changes = {};
+    			if (dirty & /*location*/ 2) map_changes.location = /*location*/ ctx[1];
+    			if (dirty & /*locationTime*/ 4) map_changes.locationTime = /*locationTime*/ ctx[2];
+    			map.$set(map_changes);
+    		},
+    		i: function intro(local) {
+    			if (current) return;
+    			transition_in(map.$$.fragment, local);
+    			current = true;
+    		},
+    		o: function outro(local) {
+    			transition_out(map.$$.fragment, local);
+    			current = false;
+    		},
+    		d: function destroy(detaching) {
+    			destroy_component(map, detaching);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_then_block.name,
+    		type: "then",
+    		source: "(103:2) {:then}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (101:35)     <div>Hello</div>   {:then}
+    function create_pending_block(ctx) {
+    	let div;
+
+    	const block = {
+    		c: function create() {
+    			div = element("div");
+    			div.textContent = "Hello";
+    			add_location(div, file$1, 101, 3, 2568);
+    		},
+    		m: function mount(target, anchor) {
+    			insert_dev(target, div, anchor);
+    		},
+    		p: noop,
+    		i: noop,
+    		o: noop,
+    		d: function destroy(detaching) {
+    			if (detaching) detach_dev(div);
+    		}
+    	};
+
+    	dispatch_dev("SvelteRegisterBlock", {
+    		block,
+    		id: create_pending_block.name,
+    		type: "pending",
+    		source: "(101:35)     <div>Hello</div>   {:then}",
+    		ctx
+    	});
+
+    	return block;
+    }
+
+    // (115:4) {:else}
     function create_else_block(ctx) {
     	let t;
 
@@ -16319,14 +16442,14 @@ var app = (function () {
     		block,
     		id: create_else_block.name,
     		type: "else",
-    		source: "(95:4) {:else}",
+    		source: "(115:4) {:else}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (91:4) {#if load}
+    // (111:4) {#if load}
     function create_if_block_1(ctx) {
     	let div;
     	let facebookloader;
@@ -16338,7 +16461,7 @@ var app = (function () {
     			div = element("div");
     			create_component(facebookloader.$$.fragment);
     			attr_dev(div, "class", "loader svelte-wdi5y7");
-    			add_location(div, file$1, 91, 4, 2205);
+    			add_location(div, file$1, 111, 4, 2771);
     		},
     		m: function mount(target, anchor) {
     			insert_dev(target, div, anchor);
@@ -16364,14 +16487,14 @@ var app = (function () {
     		block,
     		id: create_if_block_1.name,
     		type: "if",
-    		source: "(91:4) {#if load}",
+    		source: "(111:4) {#if load}",
     		ctx
     	});
 
     	return block;
     }
 
-    // (90:3) <Button color="primary" dark block disabled={load}  on:click={handleDelete}>
+    // (110:3) <Button color="primary" dark block disabled={load}  on:click={handleDelete}>
     function create_default_slot(ctx) {
     	let current_block_type_index;
     	let if_block;
@@ -16381,7 +16504,7 @@ var app = (function () {
     	const if_blocks = [];
 
     	function select_block_type(ctx, dirty) {
-    		if (/*load*/ ctx[1]) return 0;
+    		if (/*load*/ ctx[3]) return 0;
     		return 1;
     	}
 
@@ -16440,7 +16563,7 @@ var app = (function () {
     		block,
     		id: create_default_slot.name,
     		type: "slot",
-    		source: "(90:3) <Button color=\\\"primary\\\" dark block disabled={load}  on:click={handleDelete}>",
+    		source: "(110:3) <Button color=\\\"primary\\\" dark block disabled={load}  on:click={handleDelete}>",
     		ctx
     	});
 
@@ -16469,9 +16592,9 @@ var app = (function () {
     			script.defer = true;
     			script.async = true;
     			if (!src_url_equal(script.src, script_src_value = "https://maps.googleapis.com/maps/api/js?key=AIzaSyD8W_n9m3E2j2CvAp6iOO0R_tVFFTdnS40&callback=initMap")) attr_dev(script, "src", script_src_value);
-    			add_location(script, file$1, 75, 1, 1818);
+    			add_location(script, file$1, 91, 1, 2303);
     			attr_dev(div, "class", "main svelte-wdi5y7");
-    			add_location(div, file$1, 80, 0, 1974);
+    			add_location(div, file$1, 96, 0, 2459);
     		},
     		l: function claim(nodes) {
     			throw new Error("options.hydrate only works if the component was compiled with the `hydratable: true` option");
@@ -16556,12 +16679,25 @@ var app = (function () {
     	}
 
     	let load = false;
-    	console.log($vehicleStore);
     	let { active } = $$props;
     	let { ready } = $$props;
     	let location;
     	let locationTime;
+    	Pusher.logToConsole = true;
+    	var pusher = new Pusher('9468633eaae788047980', { cluster: 'mt1' });
+    	var channel = pusher.subscribe('my-channel');
 
+    	channel.bind('my-event', function (data) {
+    		//   console.log(data);
+    		$$invalidate(1, location.lat = parseFloat(data.location.lat), location);
+
+    		$$invalidate(1, location.lng = parseFloat(data.location.lng), location);
+    		$$invalidate(2, locationTime = new Date(data.locationTime).toDateString());
+    		console.log(locationTime, location);
+    	});
+
+    	// console.log($vehicleStore)
+    	// const logUser = $user
     	if ($vehicleStore.location == null) {
     		location = { lat: 1, lng: 1 };
     		locationTime = "Time 0";
@@ -16575,7 +16711,7 @@ var app = (function () {
     	let activeHome = active;
 
     	const handleDelete = async () => {
-    		$$invalidate(1, load = true);
+    		$$invalidate(3, load = true);
 
     		try {
     			const data = {
@@ -16604,7 +16740,7 @@ var app = (function () {
     		} catch(error) {
     			console.log(error);
     			myErrorAlert(error);
-    			$$invalidate(1, load = false);
+    			$$invalidate(3, load = false);
     		}
     	};
 
@@ -16642,6 +16778,8 @@ var app = (function () {
     		ready,
     		location,
     		locationTime,
+    		pusher,
+    		channel,
     		activeHome,
     		handleDelete,
     		$user,
@@ -16649,11 +16787,13 @@ var app = (function () {
     	});
 
     	$$self.$inject_state = $$props => {
-    		if ('load' in $$props) $$invalidate(1, load = $$props.load);
+    		if ('load' in $$props) $$invalidate(3, load = $$props.load);
     		if ('active' in $$props) $$invalidate(5, active = $$props.active);
     		if ('ready' in $$props) $$invalidate(0, ready = $$props.ready);
-    		if ('location' in $$props) $$invalidate(2, location = $$props.location);
-    		if ('locationTime' in $$props) $$invalidate(3, locationTime = $$props.locationTime);
+    		if ('location' in $$props) $$invalidate(1, location = $$props.location);
+    		if ('locationTime' in $$props) $$invalidate(2, locationTime = $$props.locationTime);
+    		if ('pusher' in $$props) pusher = $$props.pusher;
+    		if ('channel' in $$props) channel = $$props.channel;
     		if ('activeHome' in $$props) activeHome = $$props.activeHome;
     	};
 
@@ -16661,7 +16801,13 @@ var app = (function () {
     		$$self.$inject_state($$props.$$inject);
     	}
 
-    	return [ready, load, location, locationTime, handleDelete, active];
+    	$$self.$$.update = () => {
+    		if ($$self.$$.dirty & /*location, locationTime*/ 6) {
+    			console.log(location, locationTime);
+    		}
+    	};
+
+    	return [ready, location, locationTime, load, handleDelete, active];
     }
 
     class VehicleDetails extends SvelteComponentDev {

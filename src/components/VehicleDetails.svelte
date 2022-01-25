@@ -18,15 +18,31 @@
     }
 
 	let load = false
-
-
-	console.log($vehicleStore)
-
-	// const logUser = $user
 	export let active
 	export let ready;
 	let location
 	let locationTime
+
+	Pusher.logToConsole = true;
+
+    var pusher = new Pusher('9468633eaae788047980', {
+      cluster: 'mt1'
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+    //   console.log(data);
+		location.lat = parseFloat(data.location.lat) 
+		location.lng = parseFloat(data.location.lng) 
+
+		locationTime = new Date(data.locationTime).toDateString()
+		
+		console.log(locationTime,location)
+    });
+	// console.log($vehicleStore)
+
+	// const logUser = $user
+	
 
 	if ($vehicleStore.location == null){
 		location = {lat:1, lng: 1}
@@ -38,7 +54,9 @@
 		locationTime = new Date($vehicleStore.locationTime).toDateString()
 	}
 
-
+	$: console.log(location,locationTime)
+	$: rLocation = location
+	$: rLocationTime = locationTime
 	let activeHome = active
 
 	const handleDelete = async () => {
@@ -82,8 +100,12 @@
     <Header/>
     { #if ready }
 	<div class="sec">
-
-		<Map {location}{locationTime}></Map>
+		{#await rLocation && rLocationTime}
+			<div>Hello</div>
+		{:then} 
+		<Map {rLocation}{rLocationTime}></Map>
+			
+		{/await}
 
 		<div class="btn">
 

@@ -81,7 +81,7 @@
     </div>
 
     <form action="" class="login" >
-        <TextField label="Email" outlined hint="@xyz.com" bind:value={fields.username} />
+        <TextField label="Email" outlined hint="a@xyz.com" type="email" bind:value={fields.username} />
         <TextField label="Password" outlined hint="Password" type=password bind:value={fields.password} />
     </form>
 

@@ -1,13 +1,13 @@
 <script>
     // import mapStyles from './map-styles'; // optional
 
-   export let location 
-   export let locationTime 
+   export let rLocation 
+   export let rLocationTime 
 
    let container;
    let map;
    let zoom = 15;
-   let center = location;
+   let center = rLocation;
    
    import { onMount } from 'svelte';
    
@@ -20,7 +20,7 @@
 
        let marker = new google.maps.Marker({
            position:center,
-           title: locationTime,
+           title: rLocationTime,
            map:map
        })
    });
