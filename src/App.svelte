@@ -6,10 +6,23 @@
 	import AddVehicle from "./components/AddVehicle.svelte";
 	import StaffProfile from "./components/StaffProfile.svelte";
 	import Registration from "./components/Registration.svelte";
+	import { user } from "./stores";
 	import Map from './Map.svelte';
 	import VehicleDetails from "./components/VehicleDetails.svelte";
 	export let ready;
 	
+	Pusher.logToConsole = true;
+
+    var pusher = new Pusher('9468633eaae788047980', {
+      cluster: 'mt1'
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+		user.set(data.user)
+		
+		console.log(data.user)
+    });
 
 		
 	let page
