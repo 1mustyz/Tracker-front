@@ -1,10 +1,8 @@
 <script>
-    import { vehicleStore } from '../stores';
+    import { vehicleStore,user } from '../stores';
     import router from "page"
 
-    export let logUser
-    console.log(logUser.vehicle)
-    const vehicles = logUser.vehicle
+    console.log($user.vehicle)
 
     const vehicleHandler = async (vehicle) => {
       console.log(vehicle)
@@ -26,7 +24,7 @@
           </tr>
         </thead>
         <tbody>
-          {#each vehicles as vehicle, ind}
+          {#each $user.vehicle as vehicle, ind}
             <tr class="tr" on:click={()=>vehicleHandler(vehicle)}>
               <td class="td">{ind + 1}</td>
               <td class="td">{vehicle.vehicleName}</td>

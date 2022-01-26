@@ -13,16 +13,7 @@
 	
 	Pusher.logToConsole = true;
 
-    var pusher = new Pusher('9468633eaae788047980', {
-      cluster: 'mt1'
-    });
-
-    var channel = pusher.subscribe('my-channel');
-    channel.bind('my-event', function(data) {
-		user.set(data.user)
-		
-		console.log(data.user)
-    });
+    
 
 		
 	let page

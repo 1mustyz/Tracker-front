@@ -5,7 +5,7 @@
     import {Button,Icon} from "smelte";
     import FacebookLoader from "../shared/loader/FacebookLoader.svelte"
 	import router from "page"
-    import { vehicleStore,user } from '../stores';
+    import { vehicleStore,user,rLocation,rLocationTime } from '../stores';
 	import { alert, notice, info, success, error, defaultModules } from '@pnotify/core';
     import * as PNotifyMobile from '@pnotify/mobile';
 
@@ -36,7 +36,8 @@
 		location.lng = parseFloat(data.location.lng) 
 
 		locationTime = new Date(data.locationTime).toDateString()
-		
+		rLocation.set(location)
+		rLocationTime.set(locationTime)
 		console.log(locationTime,location)
     });
 	// console.log($vehicleStore)
@@ -55,8 +56,10 @@
 	}
 
 	$: console.log(location,locationTime)
-	$: rLocation = location
-	$: rLocationTime = locationTime
+	// $: rLocation = location
+	// $: rLocationTime = locationTime
+	rLocation.set(location)
+	rLocationTime.set(locationTime)
 	let activeHome = active
 
 	const handleDelete = async () => {
@@ -101,9 +104,9 @@
     { #if ready }
 	<div class="sec">
 		{#await rLocation && rLocationTime}
-			<div>Hello</div>
+			<div>Hellohhhhshdhd</div>
 		{:then} 
-		<Map {rLocation}{rLocationTime}></Map>
+		<Map></Map>
 			
 		{/await}
 

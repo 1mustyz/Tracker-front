@@ -6,8 +6,20 @@
 	import SpinnerLoader from "../shared/loader/SpinnerLoader.svelte";
 	import { user } from "../stores";
 	console.log($user)
+	$: logUser = $user
 
-	const logUser = $user
+	var pusher = new Pusher('9468633eaae788047980', {
+      cluster: 'mt1'
+    });
+
+    var channel = pusher.subscribe('my-channel');
+    channel.bind('my-event', function(data) {
+		user.set(data.user)
+		
+		console.log(data.user)
+		logUser = data.user
+    });
+	$: console.log(logUser)
 	export let active
 
 	let activeHome = active
@@ -20,13 +32,9 @@
 	
     <div class="align">
         <Header/>
-		{#await logUser}
-		<p class="waiting"><SpinnerLoader /></p>
-		{:then}
-			<Table {logUser} />
-		{:catch error}
-			<p style="color: red">{error.message}</p>
-		{/await}
+		
+			<Table />
+
     </div>
 </div>
 
@@ -43,12 +51,12 @@
 		min-width: 78vw;
 	}
 
-	.waiting {
+	/* .waiting {
 		width: 30%;
 		margin: auto;
 		margin-left: 28rem;
 		border-radius: 10px;
 		margin-top: 10rem;
 		
-	}
+	} */
 </style>

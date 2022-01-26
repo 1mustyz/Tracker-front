@@ -1,17 +1,17 @@
 <script>
-    // import mapStyles from './map-styles'; // optional
-
-   export let rLocation 
-   export let rLocationTime 
-
+    import { rLocation,rLocationTime } from "./stores";
+    import { tick } from 'svelte';
+    import { beforeUpdate } from 'svelte';
+  
+    $: console.log($rLocation, $rLocationTime)
    let container;
    let map;
    let zoom = 15;
-   let center = rLocation;
+   $: center = $rLocation;
    
-   import { onMount } from 'svelte';
    
-   onMount(async () => {
+   beforeUpdate(async () => {
+       await tick()
        map = new google.maps.Map(container, {
            zoom,
            center,
@@ -20,7 +20,7 @@
 
        let marker = new google.maps.Marker({
            position:center,
-           title: rLocationTime,
+           title: $rLocationTime,
            map:map
        })
    });
