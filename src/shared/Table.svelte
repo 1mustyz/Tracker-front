@@ -1,12 +1,22 @@
 <script>
     import { vehicleStore,user } from '../stores';
     import router from "page"
+    import { beforeUpdate } from "svelte";
+    localStorage.removeItem('vehicle')
 
-    console.log($user.vehicle)
-
+    // console.log($user.vehicle)
+    let userLocalStorage
+    beforeUpdate(()=>{
+      userLocalStorage = JSON.parse(localStorage.getItem('user'))
+      console.log(userLocalStorage)
+      user.set(userLocalStorage)
+    })
+    
     const vehicleHandler = async (vehicle) => {
       console.log(vehicle)
       vehicleStore.set(vehicle)
+      let gg = localStorage.setItem('vehicle',JSON.stringify(vehicle))
+      console.log($vehicleStore,gg)
       router.redirect('/vehicle-detail')
   }
 </script>

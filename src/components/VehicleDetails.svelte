@@ -43,19 +43,20 @@
 	// console.log($vehicleStore)
 
 	// const logUser = $user
+	let vehicleLocalStore = JSON.parse(localStorage.getItem('vehicle')) 
 	
 
-	if ($vehicleStore.location == null){
+	if (vehicleLocalStore.location == null){
 		location = {lat:1, lng: 1}
 		locationTime = "Time 0"
 	}else{
-		location = $vehicleStore.location
+		location = vehicleLocalStore.location
 		location.lat = parseFloat(location.lat)
 		location.lng = parseFloat(location.lng)
-		locationTime = new Date($vehicleStore.locationTime).toDateString()
+		locationTime = new Date(vehicleLocalStore.locationTime).toDateString()
 	}
 
-	$: console.log(location,locationTime)
+	$: console.log(vehicleLocalStore, $vehicleStore)
 	// $: rLocation = location
 	// $: rLocationTime = locationTime
 	rLocation.set(location)

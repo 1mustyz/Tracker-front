@@ -6,7 +6,6 @@
 	import SpinnerLoader from "../shared/loader/SpinnerLoader.svelte";
 	import { user } from "../stores";
 	console.log($user)
-	$: logUser = $user
 
 	var pusher = new Pusher('9468633eaae788047980', {
       cluster: 'mt1'
@@ -15,11 +14,9 @@
     var channel = pusher.subscribe('my-channel');
     channel.bind('my-event', function(data) {
 		user.set(data.user)
-		
+		localStorage.setItem('user',JSON.stringify(data.user))
 		console.log(data.user)
-		logUser = data.user
     });
-	$: console.log(logUser)
 	export let active
 
 	let activeHome = active

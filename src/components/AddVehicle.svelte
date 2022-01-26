@@ -80,6 +80,7 @@
                 if(content.success == true){
                     console.log('vehicle added')
                     user.set(content.user)
+                    localStorage.setItem('user', JSON.stringify(content.user))
                     myErrorAlert('Vehicle Added!!')
                     load = false
                     

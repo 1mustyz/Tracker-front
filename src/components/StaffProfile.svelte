@@ -11,8 +11,10 @@
     export let active
 
     let activeProfile = active
+    let userLocal = JSON.parse(localStorage.getItem('user')) 
+    console.log(userLocal)
 
-    let fields = {firstName:$user.firstName, surname:$user.lastName, email:$user.username, phone:$user.phone, address:$user.address}
+    let fields = {firstName:userLocal.firstName, surname:userLocal.lastName, email:userLocal.username, phone:userLocal.phone, address:userLocal.address}
 </script>
 
 <div class="main">

@@ -54,6 +54,7 @@
                 if(content.success == true){
 
                     user.set(content.newUser)
+                    localStorage.setItem('user', JSON.stringify(content.newUser) )
                     router.redirect('/dashboard')
                 }
                 else {
