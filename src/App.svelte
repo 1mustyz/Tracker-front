@@ -21,12 +21,40 @@
  
 
 	router('/', () => page = Registration)
-	router('/dashboard', () => page = Home)
-	router('/login', () => page = LoginPage)
-	router('/add-vehicle', () => page = AddVehicle)
-	router('/staff-profile', () => page = StaffProfile)
+	router('/dashboard', () => {
+		if(localStorage.getItem('user') == null){
+			router.redirect('/login')
+		} 
+		page = Home
+	})
+
+	router('/login', () => {
+		localStorage.removeItem('user')
+		localStorage.removeItem('vehicle')
+
+		page = LoginPage
+	})
+
+	router('/add-vehicle', () => {
+		if(localStorage.getItem('user') == null){
+			router.redirect('/login')
+		} 
+		page = AddVehicle
+	})
+
+	router('/staff-profile', () => {
+		if(localStorage.getItem('user') == null){
+			router.redirect('/login')
+		} 
+		page = StaffProfile
+	})
 	router('/map', () => page = MapPage)
-	router('/vehicle-detail', () => page = VehicleDetails)
+	router('/vehicle-detail', () => {
+		if(localStorage.getItem('user') == null){
+			router.redirect('/login')
+		} 
+		page = VehicleDetails
+	})
 
 
 	let active = true

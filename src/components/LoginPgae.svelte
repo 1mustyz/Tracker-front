@@ -55,7 +55,8 @@
 
                     user.set(content.newUser)
                     localStorage.setItem('user', JSON.stringify(content.newUser) )
-                    router.redirect('/dashboard')
+                    
+                    router.redirect('/add-vehicle')
                 }
                 else {
                 console.log('incorrect username or password')

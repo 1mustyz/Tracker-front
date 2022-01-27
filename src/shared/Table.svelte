@@ -34,17 +34,23 @@
           </tr>
         </thead>
         <tbody>
-          {#each $user.vehicle as vehicle, ind}
-            <tr class="tr" on:click={()=>vehicleHandler(vehicle)}>
-              <td class="td">{ind + 1}</td>
-              <td class="td">{vehicle.vehicleName}</td>
-              <td class="td">{vehicle.brandName}</td>
-              <td class="td">{vehicle.color}</td>
-              <td class="td">{vehicle.yearOfPurchase}</td>
-              <td class="td">{vehicle.vehicleId}</td>
+          {#if $user}
 
-            </tr>
-          {/each}
+            {#each $user.vehicle as vehicle, ind}
+              <tr class="tr" on:click={()=>vehicleHandler(vehicle)}>
+                <td class="td">{ind + 1}</td>
+                <td class="td">{vehicle.vehicleName}</td>
+                <td class="td">{vehicle.brandName}</td>
+                <td class="td">{vehicle.color}</td>
+                <td class="td">{vehicle.yearOfPurchase}</td>
+                <td class="td">{vehicle.vehicleId}</td>
+
+              </tr>
+            {/each}
+          {:else}
+          <p>..loading</p>  
+          {/if}
+          
          
         </tbody>
       </table>

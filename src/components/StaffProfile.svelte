@@ -13,8 +13,14 @@
     let activeProfile = active
     let userLocal = JSON.parse(localStorage.getItem('user')) 
     console.log(userLocal)
-
-    let fields = {firstName:userLocal.firstName, surname:userLocal.lastName, email:userLocal.username, phone:userLocal.phone, address:userLocal.address}
+    let fields
+    try {
+        if(userLocal){
+            fields = {firstName:userLocal.firstName, surname:userLocal.lastName, email:userLocal.username, phone:userLocal.phone, address:userLocal.address}
+        }
+    } catch (error) {
+        console.log(error)
+    }
 </script>
 
 <div class="main">
@@ -34,38 +40,43 @@
 
 
         </div>
+        {#if userLocal}
+            <form action="" class="form" >
+                <div>
+                    <TextField label="First Name" outlined hint="First Name" disabled bind:value={fields.firstName} />
 
-        <form action="" class="form" >
-            <div>
-                <TextField label="First Name" outlined hint="First Name" disabled bind:value={fields.firstName} />
+                </div>
 
-            </div>
+                <div>
 
-            <div>
+                    <TextField label="Surname" outlined hint="Surname" disabled bind:value={fields.surname}/>
+                </div>
 
-                <TextField label="Surname" outlined hint="Surname" disabled bind:value={fields.surname}/>
-            </div>
+                
+
+                <div>
+
+                    <TextField label="Email" outlined hint="ID" disabled bind:value={fields.email}/>
+                </div>
+
+                
+                <div>
+
+                    <TextField label="Phone" outlined hint="Phone" disabled bind:value={fields.phone}/>
+                </div>
+
+                <div>
+
+                    <TextField label="Address" outlined hint="Address" disabled bind:value={fields.address}/>
+                </div>
 
             
+            </form>
+        {:else}
+            <p>...loading</p>    
+        {/if}
 
-            <div>
-
-                <TextField label="Email" outlined hint="ID" disabled bind:value={fields.email}/>
-            </div>
-
-            
-            <div>
-
-                <TextField label="Phone" outlined hint="Phone" disabled bind:value={fields.phone}/>
-            </div>
-
-            <div>
-
-                <TextField label="Address" outlined hint="Address" disabled bind:value={fields.address}/>
-            </div>
-
-           
-        </form>
+        
     </div>
 </div>
 
